@@ -14,9 +14,9 @@ if (NOT TARGET BTAS::BTAS)
       )
 
   # use subproject targets as if they were in exported namespace ...
-  if (TARGET BTAS)
+  if (TARGET BTAS AND NOT TARGET BTAS::BTAS)
     add_library(BTAS::BTAS ALIAS BTAS)
-  endif()
+  endif(TARGET BTAS AND NOT TARGET BTAS::BTAS)
 
 endif(NOT TARGET BTAS::BTAS)
 
