@@ -5,7 +5,7 @@ if (NOT TARGET BTAS::BTAS)
   FetchContent_Declare(
       BTAS
       GIT_REPOSITORY      https://github.com/BTAS/btas.git
-      GIT_TAG             f75b770085c90588e6ed7c7f45b598a16663cf81
+      GIT_TAG             ${TA_TRACKED_BTAS_TAG}
   )
   FetchContent_MakeAvailable(BTAS)
   FetchContent_GetProperties(BTAS
@@ -22,5 +22,5 @@ endif(NOT TARGET BTAS::BTAS)
 
 # postcond check
 if (NOT TARGET BTAS::BTAS)
-  message(FATAL_ERROR "FindOrFetchBTAS could not provide BTAS targets")
+  message(FATAL_ERROR "FindOrFetchBTAS could not make BTAS::BTAS target available")
 endif(NOT TARGET BTAS::BTAS)
