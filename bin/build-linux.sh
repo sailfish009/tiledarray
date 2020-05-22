@@ -58,6 +58,10 @@ fi
 export MPI_HOME=${INSTALL_PREFIX}/mpich
 export MPICC=$MPI_HOME/bin/mpicc
 export MPICXX=$MPI_HOME/bin/mpicxx
+
+# for cmake to find mpi install from MPICC/MPICXX
+unset MPI_HOME
+
 export LD_LIBRARY_PATH=/usr/lib/lapack:/usr/lib/libblas:${INSTALL_PREFIX}/scalapack/lib:$LD_LIBRARY_PATH
 
 # list the prebuilt prereqs

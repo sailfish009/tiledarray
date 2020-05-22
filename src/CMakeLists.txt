@@ -235,6 +235,12 @@ else()
   set(TILEDARRAY_LIBRARY_TARGET_SUFFIXES "none")
 endif()
 
+# propagate dependencies of MADworld-static to the interface
+if (TARGET MADworld-static)
+  include(CloneTarget)
+  clone_imported_target(MADworld-interface MADworld-static)
+endif()
+
 set(targetnames)
 foreach (suffix ${TILEDARRAY_LIBRARY_TARGET_SUFFIXES})
   if (suffix STREQUAL none)
@@ -259,13 +265,12 @@ foreach (suffix ${TILEDARRAY_LIBRARY_TARGET_SUFFIXES})
     else ()
       target_link_libraries(tiledarray PRIVATE MADworld-static)
     endif ()
-    # propagate dependencies of MADworld-static to the interface
-    include(CloneTarget)
-    clone_imported_target(MADworld-interface MADworld-static)
-    target_link_libraries(tiledarray INTERFACE MADworld-interface)
-  elseif (targetname STREQUAL tiledarray-static)
-    target_link_libraries(${targetname} PUBLIC MADworld-static)
-  endif ()
+  endif()
+
+  # propagate dependencies of MADworld interface
+  if (TARGET MADworld-interface)
+    target_link_libraries(${targetname} PUBLIC MADworld-interface)
+  endif()
 
   if (TARGET build-madness)
     add_dependencies(${targetname} build-madness)
