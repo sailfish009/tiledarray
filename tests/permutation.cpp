@@ -25,6 +25,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/test/unit_test.hpp>
 
+namespace TiledArray {
 namespace detail {
 template <typename P>
 P identity(unsigned int d);
@@ -40,6 +41,7 @@ TiledArray::symmetry::Permutation identity<TiledArray::symmetry::Permutation>(
   return TiledArray::symmetry::Permutation();
 }
 }  // namespace detail
+}  // namespace TiledArray
 
 template <typename Perm>
 struct TPermutationFixture {
@@ -47,7 +49,7 @@ struct TPermutationFixture {
   ~TPermutationFixture() = default;
 
   Perm p = Perm({2, 0, 1});
-  const Perm I = detail::identity<Perm>(3);
+  const Perm I = TiledArray::detail::identity<Perm>(3);
   const Perm p102 = Perm({1, 0, 2});
   const Perm p021 = Perm({0, 2, 1});
   const Perm p120 = Perm({1, 2, 0});

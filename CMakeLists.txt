@@ -24,7 +24,7 @@
 #  Jul 19, 2013
 #
 
-cmake_minimum_required (VERSION 3.15.0) # need list(PREPEND for toolchains
+cmake_minimum_required (VERSION 3.16.0) # need list(PREPEND for toolchains
 
 ###############################################################################
 # Bring ValeevGroup cmake toolkit

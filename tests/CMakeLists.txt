@@ -97,6 +97,12 @@ set(ta_test_src_files  ta_test.cpp
     diagonal_array.cpp
     retile.cpp
 )
+set_source_files_properties(proc_grid.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
+set_source_files_properties(expressions_sparse.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
+set_source_files_properties(expressions_complex.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
+set_source_files_properties(expressions_btas.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
+set_source_files_properties(expressions_mixed.cpp PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
+
 
 if(CUDA_FOUND)
     list(APPEND ta_test_src_files cutt.cpp expressions_cuda_um.cpp tensor_um.cpp)

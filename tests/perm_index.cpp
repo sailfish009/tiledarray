@@ -26,9 +26,6 @@
 #include "TiledArray/perm_index.h"
 #include "unit_test_config.h"
 
-using namespace TiledArray;
-using namespace TiledArray::detail;
-
 struct PermIndexFixture {
   PermIndexFixture()
       : perm({1, 2, 0, 3}), range(start, finish), perm_range(perm * range) {}
@@ -38,9 +35,9 @@ struct PermIndexFixture {
   static const std::array<std::size_t, 4> start;
   static const std::array<std::size_t, 4> finish;
 
-  Permutation perm;
-  Range range;
-  Range perm_range;
+  TiledArray::Permutation perm;
+  TiledArray::Range range;
+  TiledArray::Range perm_range;
 
 };  // PermIndexFixture
 
@@ -52,6 +49,9 @@ const std::array<std::size_t, 4> PermIndexFixture::finish = {
 BOOST_FIXTURE_TEST_SUITE(perm_index_suite, PermIndexFixture)
 
 BOOST_AUTO_TEST_CASE(default_constructor) {
+  using namespace TiledArray;
+  using TiledArray::detail::PermIndex;
+
   BOOST_CHECK_NO_THROW(PermIndex x;);
   PermIndex x;
 
@@ -66,6 +66,9 @@ BOOST_AUTO_TEST_CASE(default_constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(constructor) {
+  using namespace TiledArray;
+  using TiledArray::detail::PermIndex;
+
   BOOST_CHECK_NO_THROW(PermIndex x(range, perm););
   PermIndex x(range, perm);
 
@@ -93,6 +96,8 @@ BOOST_AUTO_TEST_CASE(constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(assignment_operator) {
+  using namespace TiledArray;
+  using TiledArray::detail::PermIndex;
   PermIndex x;
 
   // Verify initial state of x
@@ -126,6 +131,9 @@ BOOST_AUTO_TEST_CASE(assignment_operator) {
 }
 
 BOOST_AUTO_TEST_CASE(permute_constructor_tensor) {
+  using TiledArray::Permutation;
+  using TiledArray::detail::PermIndex;
+
   std::array<unsigned int, 4> p = {{0, 1, 2, 3}};
 
   while (std::next_permutation(p.begin(), p.end())) {

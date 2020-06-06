@@ -30,10 +30,6 @@
 #include "TiledArray/symm/permutation_group.h"
 #include "unit_test_config.h"
 
-using TiledArray::symmetry::Permutation;
-using TiledArray::symmetry::PermutationGroup;
-using TiledArray::symmetry::SymmetricGroup;
-
 struct PermutationGroupFixture {
   PermutationGroupFixture()
       : generator(std::chrono::system_clock::now().time_since_epoch().count()),
@@ -43,6 +39,7 @@ struct PermutationGroupFixture {
       // this group describes symmetries under permutations 0<->1, 2<->3, and
       // {0,1}<->{2,3}
       P4__01__23__02_13_generators.reserve(3);
+      using TiledArray::symmetry::Permutation;
       P4__01__23__02_13_generators.emplace_back(Permutation{1, 0, 2, 3});
       P4__01__23__02_13_generators.emplace_back(Permutation{0, 1, 3, 2});
       P4__01__23__02_13_generators.emplace_back(Permutation{2, 3, 0, 1});
@@ -65,9 +62,10 @@ struct PermutationGroupFixture {
   // for testing symmetric group
   static const unsigned int max_degree = 4u;
 
-  std::vector<Permutation> P4__01__23__02_13_generators;
+  std::vector<TiledArray::symmetry::Permutation> P4__01__23__02_13_generators;
 
-  void validate_group(const PermutationGroup& S) {
+  void validate_group(const TiledArray::symmetry::PermutationGroup& S) {
+    using TiledArray::symmetry::Permutation;
     // Check that the group includes the identity element
     BOOST_CHECK_EQUAL(S.identity(), Permutation());
     for (unsigned int i = 0u; i < S.order(); ++i) {
@@ -123,6 +121,10 @@ struct PermutationGroupFixture {
 BOOST_FIXTURE_TEST_SUITE(symm_group_suite, PermutationGroupFixture)
 
 BOOST_AUTO_TEST_CASE(constructor) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   // SymmetricGroup "degree" ctor
   {
     unsigned int order = 1u;
@@ -168,6 +170,10 @@ BOOST_AUTO_TEST_CASE(constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(equality) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   {  // make S1 in 2 different ways (this also checks that trivial generators
      // are skipped)
     SymmetricGroup S1(1);
@@ -194,6 +200,10 @@ BOOST_AUTO_TEST_CASE(equality) {
 }
 
 BOOST_AUTO_TEST_CASE(comparison) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   {
     SymmetricGroup S2(2);
     PermutationGroup P1(std::vector<Permutation>{
@@ -205,6 +215,10 @@ BOOST_AUTO_TEST_CASE(comparison) {
 }
 
 BOOST_AUTO_TEST_CASE(domain) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   {  // symmetric group on a "sparse" index domain
     auto domain = {0, 7, 11, 15};
     SymmetricGroup S(domain);
@@ -234,6 +248,10 @@ BOOST_AUTO_TEST_CASE(domain) {
 }
 
 BOOST_AUTO_TEST_CASE(conjugation) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   {  // symmetric group is invariant under any permutation in it
     auto domain = {0, 2, 3, 5};
     SymmetricGroup S(domain);
@@ -261,6 +279,10 @@ BOOST_AUTO_TEST_CASE(conjugation) {
 }
 
 BOOST_AUTO_TEST_CASE(intersection) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   {  // S2 is a subgroup of S3
     SymmetricGroup S2(2);
     SymmetricGroup S3(3);
@@ -277,6 +299,10 @@ BOOST_AUTO_TEST_CASE(intersection) {
 }
 
 BOOST_AUTO_TEST_CASE(set_stabilizer) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   {  // S2{0,1} is a subgroup of S3{0,1,2} that fixes {2}
     SymmetricGroup S2(2);
     SymmetricGroup S3(3);
@@ -305,6 +331,10 @@ BOOST_AUTO_TEST_CASE(set_stabilizer) {
 }
 
 BOOST_AUTO_TEST_CASE(lexicographical_order) {
+  using TiledArray::symmetry::Permutation;
+  using TiledArray::symmetry::PermutationGroup;
+  using TiledArray::symmetry::SymmetricGroup;
+
   {  // check S5
     typedef std::array<int, 5> index_type;
     SymmetricGroup S5(5);
